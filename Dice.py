@@ -13,3 +13,6 @@ class Dice(object):
     def roll(self):
         """Randomises the top face to an int between 1 and 6 inclusive."""
         self._top = random.randint(1, 6)
+
+    def __repr__(self):
+        return str(self._top)
