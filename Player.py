@@ -56,5 +56,10 @@ class Player(object):
         """Returns the bid made by the player."""
         pass
 
+    @abstractmethod
+    def makeFirstBid(self):
+        """Returns the bid made by the player at the start of the round."""
+        pass
+
     def __repr__(self):
         return self._name + str(self._diceset)
