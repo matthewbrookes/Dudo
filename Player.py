@@ -6,8 +6,9 @@ class Player(object):
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, name):
+    def __init__(self, name, game):
         self._name = name
+        self._game = game
         # Create a set of five dice
         self._diceset = set()
         self._diceset.add(Dice())
@@ -19,6 +20,10 @@ class Player(object):
     def getName(self):
         """Returns the players name."""
         return self._name
+
+    def getGame(self):
+        """Retuns the game the player is in."""
+        return self._game
 
     def getDiceSet(self):
         """Return the set of dice belonging to player."""
