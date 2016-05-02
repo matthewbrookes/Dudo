@@ -28,3 +28,9 @@ class Bid(object):
             return True
         else:
             return False
+
+    def __repr__(self):
+        if self.getFrequency() > 1:
+            return str(self.getFrequency()) + " " + str(self.getFace()) + "s"
+        else:
+            return str(self.getFrequency()) + " " + str(self.getFace())
