@@ -20,7 +20,7 @@ class Bid(object):
         A valid bid increases the face, frequency or both."""
         if bid.getFace() < 1 or bid.getFace() > 6:
             return False
-        elif bid.getFrequency < 1:
+        elif bid.getFrequency() < 1:
             return False
         elif bid.getFace() > self._face:
             return True
