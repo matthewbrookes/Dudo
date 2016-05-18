@@ -1,10 +1,11 @@
 class Bid(object):
     """Represents a bid made by a player"""
 
-    def __init__(self, face, frequency):
+    def __init__(self, face, frequency, bidder):
         """Creates a bid of specified frequency for specified dice face."""
         self._face = face
         self._frequency = frequency
+        self._bidder = bidder
 
     def getFace(self):
         """Returns the dice face of this bid."""
@@ -13,6 +14,10 @@ class Bid(object):
     def getFrequency(self):
         """Returns the bidded frequency."""
         return self._frequency
+
+    def getBidder(self):
+        """Returns the player who made the bet"""
+        return self._bidder
 
     def isValidBid(self, bid):
         """Returns true iff the supplied bid is valid compared to current bid.

@@ -38,9 +38,9 @@ class Game(object):
         else:
             return highestRollers.pop()
 
-    def makeBid(self, bid, bidder):
+    def makeBid(self, bid):
         '''Change the latest bid.'''
-        print (bidder.getName() + " bets " + str(bid))
+        print (bid.getBidder().getName() + " bets " + str(bid))
         self._lastBid = bid
         self.nextTurn()
 
