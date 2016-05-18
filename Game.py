@@ -42,15 +42,40 @@ class Game(object):
         '''Change the latest bid.'''
         print (bid.getBidder().getName() + " bets " + str(bid))
         self._lastBid = bid
-        self.nextTurn()
 
     def getLastBid(self):
         '''Returns the last bid made in the game.'''
         return self._lastBid
 
-    def callBid(self):
+    def callBid(self, caller):
         '''The bid made by the previous player is called.'''
-        pass
+        # Build a mapping of dice face to total shown
+        diceFrequencies = dict()
+        for player in self.getPlayers():
+            diceset = player.getDiceSet()
+            print(player.getName() + " reveals: " + str(diceset))
+            for dice in diceset:
+                diceFrequencies[dice.getTop()] = diceFrequencies.get(
+                                                         dice.getTop(), 0) + 1
+        # Check whether bid met
+        bidCorrect = False
+        lastBid = self.getLastBid()
+        bidFace = lastBid.getFace()
+        if diceFrequencies.get(bidFace, 0) >= lastBid.getFrequency():
+            bidCorrect = True
+            print("The last bid was correct")
+        else:
+            print("The last bid was successfully called")
+
+        # Remove a dice for the player who lost and start a new round
+        if bidCorrect:
+            print(caller.getName() + " loses a dice.")
+            caller.removeDice()
+            self.playerQueue = self.createPlayerQueue(caller)
+        else:
+            print(lastBid.getBidder().getName() + " loses a dice.")
+            lastBid.getBidder().removeDice()
+            self.playerQueue = self.createPlayerQueue(lastBid.getBidder())
 
     def callSpotOn(self):
         '''The player believes the last bid to be spot on.'''
