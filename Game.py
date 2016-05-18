@@ -98,7 +98,8 @@ class Game(object):
 
     def createPlayerQueue(self, firstPlayer):
         '''Creates a queue of players starting with firstPlayer. If any players
-        are eliminated then they are removed from the list of players.'''
+        are eliminated then they are removed from the list of players. All dice
+        are rolled.'''
         queue = Queue()
         firstPlayerPosInList = self._playerList.index(firstPlayer)
         for i in range(0, len(self._playerList)):
@@ -106,6 +107,7 @@ class Game(object):
                                              len(self._playerList)]
             # Check whether player has been eliminated
             if not player.isEliminated():
+                player.rollAllDice()
                 queue.put(player)
             else:
                 print(player.getName() + " is eliminated.")
