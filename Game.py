@@ -56,30 +56,38 @@ class Game(object):
         '''The player believes the last bid to be spot on.'''
         pass
 
-    def nextTurn(self):
-        '''Play proceeds to the next player.'''
-        pass
-
     def newRound(self, firstPlayer):
         '''Start a new round from the given player.'''
-        self.playerQueue = Queue()
+        self.playerQueue = self.createPlayerQueue(firstPlayer)
+        # Get the first player to make a bid
+        firstPlayer = self.playerQueue.get()
         self.playerQueue.put(firstPlayer)
-        # Add players to the queue going clockwise from firstPlayer
+        firstPlayer.makeFirstBid()
+
+        # Game loop
+        while self.playerQueue.qsize() > 1:
+            # Pop player from queue and add to back
+            player = self.playerQueue.get()
+            self.playerQueue.put(player)
+            player.takeTurn()
+
+    def createPlayerQueue(self, firstPlayer):
+        '''Creates a queue of players starting with firstPlayer. If any players
+        are eliminated then they are removed from the list of players.'''
+        queue = Queue()
+        queue.put(firstPlayer)
         firstPlayerPosInList = self._playerList.index(firstPlayer)
         for i in range(1, len(self._playerList)):
             player = self._playerList[(firstPlayerPosInList + i) %
                                              len(self._playerList)]
             # Check whether player has been eliminated
             if not player.isEliminated():
-                self.playerQueue.put(player)
+                queue.put(player)
             else:
-                print(player.getName() + " is eliminated ")
+                print(player.getName() + " is eliminated.")
                 self._playerList.remove(player)
                 i -= 1
-        # Get the first player to make a bid
-        firstPlayer = self.playerQueue.get()
-        self.playerQueue.put(firstPlayer)
-        firstPlayer.makeFirstBid()
+        return queue
 
     def getPlayers(self):
         return self._playerList
