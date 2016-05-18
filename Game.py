@@ -100,9 +100,8 @@ class Game(object):
         '''Creates a queue of players starting with firstPlayer. If any players
         are eliminated then they are removed from the list of players.'''
         queue = Queue()
-        queue.put(firstPlayer)
         firstPlayerPosInList = self._playerList.index(firstPlayer)
-        for i in range(1, len(self._playerList)):
+        for i in range(0, len(self._playerList)):
             player = self._playerList[(firstPlayerPosInList + i) %
                                              len(self._playerList)]
             # Check whether player has been eliminated
